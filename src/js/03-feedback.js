@@ -16,23 +16,29 @@ form.addEventListener('submit', onSubmitForm)
 form.addEventListener('input', throttle(onInputWrite, 500));
 
 function onInputWrite() {
-    const storageData = { email: input.value, message: textarea.value };
+    if (
+      input.value.trim() !== '' &&
+      textarea.value.trim() !== ''
+    ) {
+      const storageData = { email: input.value, message: textarea.value };
 
-    localStorage.setItem(FEEDBACK_FORM_STATE, JSON.stringify(storageData));
+      localStorage.setItem(FEEDBACK_FORM_STATE, JSON.stringify(storageData));
+    }
+    
 }
 
 function onSubmitForm(evt) {
-    evt.preventDefault();
+  evt.preventDefault();
 
-    const getData = JSON.parse(localStorage.getItem(FEEDBACK_FORM_STATE));
+  const getData = JSON.parse(localStorage.getItem(FEEDBACK_FORM_STATE));
 
     if (getData) {
-        console.log(getData)
-    }
+      console.log(getData);
+  }
 
-    evt.target.reset()
+  evt.target.reset();
 
-    localStorage.removeItem(FEEDBACK_FORM_STATE)
+  localStorage.removeItem(FEEDBACK_FORM_STATE);
 }
 
 const getDataFromStorage = localStorage.getItem(FEEDBACK_FORM_STATE);
